@@ -14,7 +14,22 @@
   left: 280px;
   height: 60px;
   width: 40px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+}
+
+#player1{
   background-image: url('../img/player1-shoot.png');
+}
+
+.ball{
+  top: 100px;
+  left: 200px;
+  height: 30px;
+  width: 30px;
+  border-radius: 25px;
+  background-image: url('../img/purple-bubble.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;

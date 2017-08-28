@@ -1,6 +1,6 @@
-function Player(x, y, speed, weapon, lifes){
+function Player(x, y, speed, lifes){
   Actor.call(this, x, y, speed)
-  this.weapon = weapon
+  this.shot = new Shot()
   this.lifes = lifes
 }
 
@@ -13,4 +13,18 @@ Player.prototype.moveLeft = function () {
 
 Player.prototype.moveRight = function () {
   this.y += this.speed
+}
+
+Player.prototype.shoot = function() {
+  var boardHeight = parseInt($('#board').css('height'))
+  var playerWidth = parseInt($('.player').css('width'))
+
+  this.shot.x = boardHeight
+  this.shot.y = this.x - player1Width/2
+  this.shot.speed = this.speed
+
+  var $shot = $('<div>').attr('id','shot');
+  var boardHeight = parseInt($('#board').css('height'))
+  $shot.css({top:boardHeight, left: this.y + playerWidth/2, height: '0px', width: '5px', position:'absolute', background: 'green'});
+  $('#board').append($shot);
 }
