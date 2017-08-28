@@ -39,7 +39,15 @@ Shot.prototype._ballCollision = function (topShot, leftShot){
 
     if((leftShot>leftBall && leftShot<leftBall + widthBall) && topShot == topBall+heightBall){
       collision = true
-      
+
+      $(balls[i]).remove()
+
+      var $ball1 = $('<div>').attr('class','ball');
+      $ball1.css({top:topBall, left: leftBall, height: heightBall/2, width: widthBall/2});
+      $('#board').append($ball1);
+      var $ball2 = $('<div>').attr('class','ball');
+      $ball2.css({top:topBall, left: leftBall+widthBall/2, height: heightBall/2, width: widthBall/2});
+      $('#board').append($ball2);
     }
 
   }
