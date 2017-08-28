@@ -25,6 +25,8 @@
 
 .ball{
   border-radius: 25px;
+  border-color: #000;
+  border-width: 2px;
   background-image: url('../img/purple-bubble.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -34,6 +36,6 @@
 #firstBall{
   top: 100px;
   left: 200px;
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
 }
