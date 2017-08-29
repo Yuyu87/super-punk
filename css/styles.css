@@ -24,18 +24,11 @@
 }
 
 .ball{
-  border-radius: 25px;
+  border-radius: 50px;
   border-color: #000;
   border-width: 2px;
   background-image: url('../img/purple-bubble.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;
-}
-
-#firstBall{
-  top: 100px;
-  left: 200px;
-  height: 40px;
-  width: 40px;
 }

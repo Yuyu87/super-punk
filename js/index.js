@@ -1,53 +1,28 @@
-var board = new Board()
-
-var player1Width = parseInt($('#player1').css('width'))
-var player1Left = parseInt($('#player1').css('left'))
-var boardWidth = parseInt($('#board').css('width'))
-var boardHeight = parseInt($('#board').css('height'))
-
-var leftBall = parseInt($('#ball').css('left'))
+var board = new Board(300, 600)
+var player1 = new Player(280, 240, 40, 5, 3, 'player1')
+var balls = []
+balls.push(new Ball(200, 100, 5, 80, 'ball' + balls.length))
+var shot
 
 var intervalTime = 50
 var game
 $(document).ready(function() {
-    game = setInterval(updateState, intervalTime)
-    // setInterval(moveBalls, intervalTime)
+    game = setInterval(updateGame, intervalTime)
 })
 
-function updateState(){
-  renderPlayer()
-  if($('#shot').length != 0) renderShot()
-
+function updateGame(){
+  if($('#shot').length != 0) shot.growUntilCollision(board, balls)
 }
-
-// function moveBalls(){
-//   leftBall = parseInt($('#ball').css('left'))
-//   leftBall+=5
-//   $('#ball').css('top', leftBall*leftBall/10)
-// }
 
 $(document).on('keydown', function(e){
-  if(e.keyCode == 37){ //Arrow left
-    player1Left = parseInt($('#player1').css('left'))
-    if(player1Left > 0) board.player1.moveLeft()
-  }
-  if(e.keyCode == 39){ //Arrow right
-    player1Left = parseInt($('#player1').css('left'))
-    if(player1Left < boardWidth - player1Width) board.player1.moveRight()
-  }
-  if(e.keyCode == 38){ //Arrow up
-    board.player1.shoot()
-    board.player1.shot.growUntilCollision()
+  if(e.keyCode == 37)
+    if(player1.x > 0) player1.move('left')
+
+  if(e.keyCode == 39)
+    if(player1.x < board.width - player1.width) player1.move('right')
+
+  if(e.keyCode == 38){
+    if($('#shot').length == 0)
+      shot = new Shot(board, player1, 5, 0, 'shot')
   }
 })
-
-function renderPlayer (){
-  $('#player1').css('left', board.player1.y)
-}
-
-function renderShot(){
-  board.player1.shot.growUntilCollision()
-
-  $('#shot').css('height', board.player1.shot.height);
-  $('#shot').css('top', board.player1.shot.x);
-}

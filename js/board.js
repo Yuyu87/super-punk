@@ -1,4 +1,13 @@
-function Board(){
-  this.player1 = new Player(240, 280, 5)
-  this.ball = new Ball(100, 200, 5)
+function Board(height, width){
+  this.height = height
+  this.width = width
+  this._render()
 }
+
+Board.prototype._render = function () {
+  var board = $('<div>').attr('id', '#board').css({
+    width: this.width,
+    height: this.height
+  })
+  $('body').append(board)
+};
