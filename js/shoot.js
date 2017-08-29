@@ -46,8 +46,8 @@ Shot.prototype.growUntilCollision = function (board, balls){
 Shot.prototype._ballCollision = function (balls){
   var collision = false
 
-  for(var i=0; i<balls.length; i++){
-    if(this.y == balls[i].y + balls[i].width && (this.x<balls[i].x + balls[i].width && this.x < balls[i].x + balls[i].width)){
+  for(var i=0; i<balls.length && !collision; i++){
+    if(this.y == balls[i].y + balls[i].width && (this.x>balls[i].x && this.x < balls[i].x + balls[i].width)){
       collision = true
 
       $('#' + balls[i].identifier).remove()
@@ -58,7 +58,7 @@ Shot.prototype._ballCollision = function (balls){
         balls.push(new Ball(balls[i].x + balls[i].width/2, balls[i].y ,
           balls[i].speed, balls[i].width/2, 'ball' + this._lastIdOn(balls)))
 
-        balls.splice(i, 1);
+        balls.splice(i, 1)
       }
     }
   }
