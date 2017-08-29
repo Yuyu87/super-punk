@@ -5,7 +5,7 @@ function Board(height, width){
 }
 
 Board.prototype._render = function () {
-  var board = $('<div>').attr('id', '#board').css({
+  var board = $('<div>').attr('id', 'board').css({
     width: this.width,
     height: this.height
   })

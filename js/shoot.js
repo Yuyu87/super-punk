@@ -36,7 +36,7 @@ Shot.prototype.growUntilCollision = function (board, balls){
 
     this._render()
 
-    if(this.y == 0 || this._ballCollision(balls)){
+    if(this.y == 0 || this._ballCollision(board, balls)){
       collision = true
       $('#' + this.identifier).remove()
     }
@@ -54,9 +54,9 @@ Shot.prototype._ballCollision = function (balls){
 
       if(balls[i].width>20){
         balls.push(new Ball(balls[i].x, balls[i].y, balls[i].speed,
-          balls[i].width/2, 'ball' + this._lastIdOn(balls)))
+          balls[i].width/2, 'ball' + this._lastIdOn(balls), board))
         balls.push(new Ball(balls[i].x + balls[i].width/2, balls[i].y ,
-          balls[i].speed, balls[i].width/2, 'ball' + this._lastIdOn(balls)))
+          balls[i].speed, balls[i].width/2, 'ball' + this._lastIdOn(balls), board))
 
         balls.splice(i, 1)
       }
