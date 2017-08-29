@@ -1,7 +1,7 @@
 var board = new Board(300, 600)
 var player1 = new Player(280, 240, 40, 5, 3, 'player1')
 var balls = []
-balls.push(new Ball(200, 100, 1, 80, 'ball' + balls.length))
+balls.push(new Ball(200, 100, 5, 80, 'ball' + balls.length))
 var shot
 
 var intervalTime = 50

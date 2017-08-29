@@ -4,6 +4,8 @@ function Ball(x, y, speed, width, identifier, points, hideObject){
   this.height = width
   this.identifier = identifier
   this._renderBall()
+  this.speedX = this._randomDirection()
+  this.speedY = this._randomDirection()
   this.direction = this._randomDirection()
 }
 
@@ -29,60 +31,23 @@ Ball.prototype._render = function(){
 }
 
 Ball.prototype._randomDirection = function() {
-  var directions = ['NW', 'NE', 'SE', 'SW']
+  var directions = [this.speed, this.speed*-1]
   var indexRandom = Math.floor(Math.random()*directions.length)
+
   return directions[indexRandom]
 }
 
 Ball.prototype.move = function(){
-  switch (this.direction) {
-    case 'NW': this.y -= 5; this.x -= 5; this._checkCollision(); break;
-    case 'NE': this.y -= 5; this.x += 5; this._checkCollision(); break;
-    case 'SE': this.y += 5; this.x += 5; this._checkCollision(); break;
-    case 'SW': this.y += 5; this.x -= 5; this._checkCollision(); break;
-  }
+  this.y += this.speedY
+  this.x += this.speedX
+  this._checkCollision()
+
   this._render()
 }
 
 Ball.prototype._checkCollision = function(){
-  // Ball hit the top
-  if(this.y == 0){
-    switch (this.direction) {
-      case 'NW': this.direction = 'SW'; break;
-      case 'NE': this.direction = 'SE'; break;
-    }
-  }
-
-  // Ball hit on left
-  if(this.x == 0){
-    switch (this.direction) {
-      case 'NW': this.direction = 'NE'; break;
-      case 'SW': this.direction = 'SE'; break;
-    }
-  }
-
-  // Ball hit on right
-  if(this.x == board.width - this.width){
-    switch (this.direction) {
-      case 'NE': this.direction = 'NW'; break;
-      case 'SE': this.direction = 'SW'; break;
-    }
-  }
-
-  // Ball hit the floor
-  if(this.y == board.height - this.height){
-    switch (this.direction) {
-      case 'SE': this.direction = 'NE'; break;
-      case 'SW': this.direction = 'NW'; break;
-    }
-  }
-
-  if(this.y == board.height - this.height){
-    switch (this.direction) {
-      case 'SE': this.direction = 'NE'; break;
-      case 'SW': this.direction = 'NW'; break;
-    }
-  }
+  if(this._hitBoardTop() || this._hitBoardBottom()) this.speedY*=-1
+  if(this._hitBoardLeft() || this._hitBoardRight()) this.speedX*=-1
 
   if(this._hitTheShotOnRight()) {
     this.divideOnTwo()
@@ -105,6 +70,22 @@ Ball.prototype._hitTheShotOnLeft = function(){
     if(this.x + this.width == shot.x && this.y > board.height - shot.height)
       return true
   else return false
+}
+
+Ball.prototype._hitBoardTop = function(){
+  return this.y == 0
+}
+
+Ball.prototype._hitBoardBottom = function(){
+  return this.y == board.height - this.height
+}
+
+Ball.prototype._hitBoardLeft = function(){
+  return this.x == 0
+}
+
+Ball.prototype._hitBoardRight = function(){
+  return this.x == board.width - this.width
 }
 
 Ball.prototype.divideOnTwo = function(){
