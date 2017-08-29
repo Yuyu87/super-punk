@@ -1,4 +1,4 @@
-function Ball(x, y, speed, width, identifier, board, points, hideObject){
+function Ball(x, y, speed, width, identifier, points, hideObject){
   Actor.call(this, x, y, speed)
   this.width = width
   this.height = width
@@ -76,4 +76,50 @@ Ball.prototype._checkCollision = function(){
       case 'SW': this.direction = 'NW'; break;
     }
   }
+
+  if(this.y == board.height - this.height){
+    switch (this.direction) {
+      case 'SE': this.direction = 'NE'; break;
+      case 'SW': this.direction = 'NW'; break;
+    }
+  }
+
+  if(this._hitTheShotOnRight()) {
+    this.divideOnTwo()
+  }
+
+  if(this._hitTheShotOnLeft()){
+    this.divideOnTwo()
+  }
+}
+
+Ball.prototype._hitTheShotOnRight = function(){
+  if($('#shot').length != 0)
+    if(this.x == shot.x + shot.width && this.y > board.height - shot.height)
+      return true
+  else return false
+}
+
+Ball.prototype._hitTheShotOnLeft = function(){
+  if($('#shot').length != 0)
+    if(this.x + this.width == shot.x && this.y > board.height - shot.height)
+      return true
+  else return false
+}
+
+Ball.prototype.divideOnTwo = function(){
+  $('#' + this.identifier).remove()
+
+  if(this.width>20){
+    balls.push(new Ball(this.x, this.y, this.speed,
+      this.width/2, 'ball' + this._lastIdOn(balls)))
+    balls.push(new Ball(this.x + this.width/2, this.y ,
+      this.speed, this.width/2, 'ball' + this._lastIdOn(balls)))
+
+    balls.splice(balls.indexOf(this), 1)
+  }
+}
+
+Ball.prototype._lastIdOn = function (){
+  return parseInt(balls[balls.length-1].identifier.slice(4)) + 1
 }

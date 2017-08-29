@@ -1,6 +1,7 @@
 function Shot(board, player, speed, height, identifier){
   Actor.call(this, player.x + player.width/2, board.height, speed)
   this.height = height
+  this.width = 5
   this.identifier = identifier
   this._renderShot()
 }
@@ -13,7 +14,7 @@ Shot.prototype._renderShot = function() {
     top: this.y,
     left: this.x,
     height: this.height,
-    width: '5px',
+    width: this.width,
     position:'absolute',
     background: 'green'});
   $('#board').append($shot);
@@ -27,7 +28,7 @@ Shot.prototype._render = function(){
   })
 }
 
-Shot.prototype.growUntilCollision = function (board, balls){
+Shot.prototype.growUntilCollision = function (){
   var collision = false
 
   if(!collision){
@@ -36,35 +37,21 @@ Shot.prototype.growUntilCollision = function (board, balls){
 
     this._render()
 
-    if(this.y == 0 || this._ballCollision(board, balls)){
+    if(this.y == 0 || this._ballCollision()){
       collision = true
       $('#' + this.identifier).remove()
     }
   }
 }
 
-Shot.prototype._ballCollision = function (balls){
+Shot.prototype._ballCollision = function (){
   var collision = false
 
   for(var i=0; i<balls.length && !collision; i++){
     if(this.y == balls[i].y + balls[i].width && (this.x>balls[i].x && this.x < balls[i].x + balls[i].width)){
       collision = true
-
-      $('#' + balls[i].identifier).remove()
-
-      if(balls[i].width>20){
-        balls.push(new Ball(balls[i].x, balls[i].y, balls[i].speed,
-          balls[i].width/2, 'ball' + this._lastIdOn(balls), board))
-        balls.push(new Ball(balls[i].x + balls[i].width/2, balls[i].y ,
-          balls[i].speed, balls[i].width/2, 'ball' + this._lastIdOn(balls), board))
-
-        balls.splice(i, 1)
-      }
+      balls[i].divideOnTwo()
     }
   }
   return collision
-}
-
-Shot.prototype._lastIdOn = function (balls){
-  return parseInt(balls[balls.length-1].identifier.slice(4)) + 1
 }
