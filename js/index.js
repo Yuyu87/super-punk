@@ -1,5 +1,5 @@
-var board = new Board(300, 600)
-var player1 = new Player(280, 240, 40, 5, 3, 'player1')
+var board = new Board(300, 600, 40, 40)
+var player1 = new Player(280, 240, 40, 60, 5, 3, 'player1')
 var balls = []
 balls.push(new Ball(200, 100, 5, 80, 'ball' + balls.length))
 var shot
@@ -13,6 +13,12 @@ $(document).ready(function() {
 function updateGame(){
   if($('#shot').length != 0) shot.growUntilCollision()
   balls.forEach((ball)=>{ball.move()})
+  balls.forEach((ball)=>{
+    if(player1.ballHitPlayer('#' + ball.identifier)) clearInterval(game)
+    if($('#shot').length != 0)
+      if(shot.ballHitShot('#' + ball.identifier)) ball.divideOnTwoOrDisappear()
+  })
+
 }
 
 $(document).on('keydown', function(e){

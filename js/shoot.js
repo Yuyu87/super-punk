@@ -37,21 +37,21 @@ Shot.prototype.growUntilCollision = function (){
 
     this._render()
 
-    if(this.y == 0 || this._ballCollision()){
+    if(this._hitBoardTop()){
       collision = true
       $('#' + this.identifier).remove()
     }
   }
 }
 
-Shot.prototype._ballCollision = function (){
-  var collision = false
+Shot.prototype._hitBoardTop = function(){
+  return this.y == 0
+}
 
-  for(var i=0; i<balls.length && !collision; i++){
-    if(this.y == balls[i].y + balls[i].width && (this.x>balls[i].x && this.x < balls[i].x + balls[i].width)){
-      collision = true
-      balls[i].divideOnTwo()
-    }
+Shot.prototype.ballHitShot = function (ballId){
+  if($(ballId).collision('#' + this.identifier).attr('id') == this.identifier){
+    $('#' + this.identifier).remove()
+    return true
   }
-  return collision
+  return false
 }

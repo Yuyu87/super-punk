@@ -49,13 +49,8 @@ Ball.prototype._checkCollision = function(){
   if(this._hitBoardTop() || this._hitBoardBottom()) this.speedY*=-1
   if(this._hitBoardLeft() || this._hitBoardRight()) this.speedX*=-1
 
-  if(this._hitTheShotOnRight()) {
-    this.divideOnTwo()
-  }
-
-  if(this._hitTheShotOnLeft()){
-    this.divideOnTwo()
-  }
+  if(this._hitTheShotOnRight()) this.divideOnTwoOrDisappear()
+  if(this._hitTheShotOnLeft()) this.divideOnTwoOrDisappear()
 }
 
 Ball.prototype._hitTheShotOnRight = function(){
@@ -88,8 +83,9 @@ Ball.prototype._hitBoardRight = function(){
   return this.x == board.width - this.width
 }
 
-Ball.prototype.divideOnTwo = function(){
+Ball.prototype.divideOnTwoOrDisappear = function(){
   $('#' + this.identifier).remove()
+  $('#' + shot.identifier).remove()
 
   if(this.width>20){
     balls.push(new Ball(this.x, this.y, this.speed,
