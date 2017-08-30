@@ -1,4 +1,4 @@
-function Ball(x, y, speed, width, identifier, points, hideObject){
+function Ball(x, y, speed, width, identifier, hideObject){
   Actor.call(this, x, y, speed)
   this.width = width
   this.height = width
@@ -6,7 +6,7 @@ function Ball(x, y, speed, width, identifier, points, hideObject){
   this._renderBall()
   this.speedX = this._randomDirection()
   this.speedY = this._randomDirection()
-  this.direction = this._randomDirection()
+  this._calculatePoints()
 }
 
 Ball.prototype = Object.create(Actor.prototype)
@@ -21,6 +21,15 @@ Ball.prototype._renderBall = function () {
     width: this.width
   })
   $('#board').append($ball)
+}
+
+Ball.prototype._calculatePoints = function(){
+  switch (this.width) {
+    case 160: this.points = 100; break;
+    case 80:  this.points = 200; break;
+    case 40:  this.points = 300; break;
+    case 20:  this.points = 400; break;
+  }
 }
 
 Ball.prototype._render = function(){

@@ -7,7 +7,7 @@ var shot
 var intervalTime = 50
 var game
 $(document).ready(function() {
-    game = setInterval(updateGame, intervalTime)
+  game = setInterval(updateGame, intervalTime)
 })
 
 function updateGame(){
@@ -22,9 +22,12 @@ function updateGame(){
       }else gameOver()
     }
     if($('#shot').length != 0)
-      if(shot.ballHitShot('#' + ball.identifier)) ball.divideOnTwoOrDisappear()
+      if(shot.ballHitShot('#' + ball.identifier)){
+        shot.player.points += ball.points
+        ball.divideOnTwoOrDisappear()
+      }
   })
-
+  player1.updatePoints()
 }
 
 $(document).on('keydown', function(e){
@@ -40,6 +43,10 @@ $(document).on('keydown', function(e){
   }
 })
 
+function updatePoints(){
+
+}
+
 function restartGame(){
   player1.restart()
   if($('#shot').length != 0) shot.restart()
@@ -50,4 +57,11 @@ function restartGame(){
 
 function gameOver(){
   console.log('GAME OVER')
+  $('#' + player1.identifier).remove()
+  if($('#shot').length != 0) shot.restart()
+  balls.forEach((ball)=>{ball.restart()})
+  $('#board').remove()
+
+  $gameOver = $('<div>').attr('id', 'game-over').text('GAME OVER')
+  $('body').append($gameOver)
 }

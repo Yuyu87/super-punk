@@ -2,6 +2,7 @@ function Shot(board, player, speed, height, identifier){
   Actor.call(this, player.x + player.width/2, board.height, speed)
   this.height = height
   this.width = 5
+  this.player = player
   this.identifier = identifier
   this._renderShot()
 }
@@ -17,7 +18,7 @@ Shot.prototype._renderShot = function() {
     width: this.width,
     position:'absolute',
     background: 'green'});
-  $('#board').append($shot);
+  $('#board').prepend($shot);
 }
 
 Shot.prototype._render = function(){

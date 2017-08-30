@@ -4,8 +4,10 @@ function Player(x, y, width, height, speed, lifes, identifier){
   this.height = height
   this.lifes = lifes
   this.identifier = identifier
+  this.points = 0
   this._renderPlayer()
   this._renderLifes()
+  this._renderPoints()
 }
 
 Player.prototype = Object.create(Player.prototype)
@@ -37,8 +39,25 @@ Player.prototype._renderLifes = function(){
   }
 }
 
-Player.prototype._render = function(){
+Player.prototype._renderPoints = function(){
+  var $points = $('<div>').attr('id', 'points').css({
+      top: board.top,
+      position: 'relative',
+      display: 'inline-block',
+      height: 50,
+      width: 30,
+      margin: '5px'
+    }).text(this.points)
+    $('body').append($points)
+}
+
+Player.prototype.updatePoints = function(){
+  $('#points').text(this.points)
+}
+
+Player.prototype._render = function(direction){
   $('#' + this.identifier).css({left: this.x})
+  // $('#' + this.identifier).css({left: this.x}).removeClass().addClass('player').addClass('walk-' + direction)
 }
 
 Player.prototype.restart = function(){
@@ -47,10 +66,10 @@ Player.prototype.restart = function(){
 
 Player.prototype.move = function (direction) {
   switch (direction) {
-    case 'left':  this.x -= this.speed; break;
-    case 'right': this.x += this.speed; break;
+    case 'left':  this.x -= this.speed; this._render('left'); break;
+    case 'right': this.x += this.speed; this._render('right'); break;
   }
-  this._render()
+
 }
 
 Player.prototype.ballHitPlayer = function(ballId){

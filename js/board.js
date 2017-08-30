@@ -7,11 +7,11 @@ function Board(height, width, top, left){
 }
 
 Board.prototype._render = function () {
-  var board = $('<div>').attr('id', 'board').css({
+  var $board = $('<div>').attr('id', 'board').css({
     width: this.width,
     height: this.height,
     top: this.top,
     left: this.left
   })
-  $('body').append(board)
+  $('body').append($board)
 };
