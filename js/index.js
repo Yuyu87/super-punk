@@ -14,7 +14,13 @@ function updateGame(){
   if($('#shot').length != 0) shot.growUntilCollision()
   balls.forEach((ball)=>{ball.move()})
   balls.forEach((ball)=>{
-    if(player1.ballHitPlayer('#' + ball.identifier)) clearInterval(game)
+    if(player1.ballHitPlayer('#' + ball.identifier)){
+      clearInterval(game)
+      if(player1.lifes>=0){
+        restartGame()
+        game = setInterval(updateGame, intervalTime)
+      }else gameOver()
+    }
     if($('#shot').length != 0)
       if(shot.ballHitShot('#' + ball.identifier)) ball.divideOnTwoOrDisappear()
   })
@@ -33,3 +39,15 @@ $(document).on('keydown', function(e){
       shot = new Shot(board, player1, 10, 0, 'shot')
   }
 })
+
+function restartGame(){
+  player1.restart()
+  if($('#shot').length != 0) shot.restart()
+  balls.forEach((ball)=>{ball.restart()})
+  balls = []
+  balls.push(new Ball(200, 100, 5, 80, 'ball' + balls.length))
+}
+
+function gameOver(){
+  console.log('GAME OVER')
+}

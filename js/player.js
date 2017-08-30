@@ -41,6 +41,10 @@ Player.prototype._render = function(){
   $('#' + this.identifier).css({left: this.x})
 }
 
+Player.prototype.restart = function(){
+  this.x = board.width/2 - this.width/2
+}
+
 Player.prototype.move = function (direction) {
   switch (direction) {
     case 'left':  this.x -= this.speed; break;

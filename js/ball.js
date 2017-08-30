@@ -37,6 +37,10 @@ Ball.prototype._randomDirection = function() {
   return directions[indexRandom]
 }
 
+Ball.prototype.restart = function(){
+  $('#' + this.identifier).remove()
+}
+
 Ball.prototype.move = function(){
   this.y += this.speedY
   this.x += this.speedX

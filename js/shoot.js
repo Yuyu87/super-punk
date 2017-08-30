@@ -28,6 +28,10 @@ Shot.prototype._render = function(){
   })
 }
 
+Shot.prototype.restart = function(){
+  $('#' + this.identifier).remove()
+}
+
 Shot.prototype.growUntilCollision = function (){
   var collision = false
 
