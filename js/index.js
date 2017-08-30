@@ -1,5 +1,5 @@
-var board = new Board(300, 600, 40, 40)
-var player1 = new Player(280, 240, 40, 60, 5, 3, 'player1')
+var board = new Board(400, 700, 40, 40)
+var player1 = new Player(board.width/2 - 20, board.height - 60, 40, 60, 5, 3, 'player1')
 var balls = []
 balls.push(new Ball(200, 100, 5, 80, 'ball' + balls.length))
 var shot
@@ -16,10 +16,8 @@ function updateGame(){
   balls.forEach((ball)=>{
     if(player1.ballHitPlayer('#' + ball.identifier)){
       clearInterval(game)
-      if(player1.lifes>=0){
-        restartGame()
-        game = setInterval(updateGame, intervalTime)
-      }else gameOver()
+      if(player1.lifes>=0)restartGame()
+      else gameOver()
     }
     if($('#shot').length != 0)
       if(shot.ballHitShot('#' + ball.identifier)){
@@ -27,6 +25,7 @@ function updateGame(){
         ball.divideOnTwoOrDisappear()
       }
   })
+  if($('#hideObject').length != 0) checkObject()
   player1.updatePoints()
 }
 
@@ -39,13 +38,9 @@ $(document).on('keydown', function(e){
 
   if(e.keyCode == 38){
     if($('#shot').length == 0)
-      shot = new Shot(board, player1, 10, 0, 'shot')
+      shot = new Shot(board, player1, 15, 0, 'shot')
   }
 })
-
-function updatePoints(){
-
-}
 
 function restartGame(){
   player1.restart()
@@ -53,10 +48,43 @@ function restartGame(){
   balls.forEach((ball)=>{ball.restart()})
   balls = []
   balls.push(new Ball(200, 100, 5, 80, 'ball' + balls.length))
+
+  game = setInterval(updateGame, intervalTime)
+}
+
+function checkObject(){
+  if($('#' + player1.identifier).collision('#hideObject').attr('id') == 'hideObject'){
+    if($('#hideObject').hasClass('beer')){
+      player1.speed *=2
+      setTimeout(()=>{ player1.speed /=2 }, 3000);
+    }
+    if($('#hideObject').hasClass('clock')){
+      var ballNormalSpeedX = balls[0].speedX
+      var ballNormalSpeedY = balls[0].speedY
+
+      balls.forEach((ball)=>{ball.speedX = 0; ball.speedY = 0; })
+
+      setTimeout(()=>{
+        balls.forEach((ball)=>{
+          ball.speedX = ballNormalSpeedX
+          ball.speedY = ballNormalSpeedY })
+      }, 3000);
+    }
+    if($('#hideObject').hasClass('drug')){
+      balls.forEach((ball)=>{
+        $('#' + ball.identifier).addClass('animated flash').css({
+        '-webkit-animation-iteration-count': 'infinite',
+        '-moz-animation-iteration-count': 'infinite'})})
+
+      setTimeout(()=>{
+        balls.forEach((ball)=>{$('#' + ball.identifier).removeClass('animated').removeClass('lightSpeedOut') })
+      }, 3000)
+    }
+    $('#hideObject').remove()
+  }
 }
 
 function gameOver(){
-  console.log('GAME OVER')
   $('#' + player1.identifier).remove()
   if($('#shot').length != 0) shot.restart()
   balls.forEach((ball)=>{ball.restart()})

@@ -14,7 +14,7 @@ Ball.constructor = Ball
 
 Ball.prototype._renderBall = function () {
   var $ball = $('<div>').attr('id', this.identifier).addClass('ball').css({
-    position: "absolute",
+    position: 'absolute',
     top: this.y,
     left: this.x,
     height: this.height,
@@ -100,6 +100,8 @@ Ball.prototype.divideOnTwoOrDisappear = function(){
   $('#' + this.identifier).remove()
   $('#' + shot.identifier).remove()
 
+  if(this._hasHideObject()) this._showHideObject()
+
   if(this.width>20){
     balls.push(new Ball(this.x, this.y, this.speed,
       this.width/2, 'ball' + this._lastIdOn(balls)))
@@ -112,4 +114,25 @@ Ball.prototype.divideOnTwoOrDisappear = function(){
 
 Ball.prototype._lastIdOn = function (){
   return parseInt(balls[balls.length-1].identifier.slice(4)) + 1
+}
+
+Ball.prototype._hasHideObject = function (){
+  return Math.round(Math.random()*10) + 1 > 7 && $('#hideObject').length == 0
+}
+
+Ball.prototype._showHideObject = function (){
+  var possibleObjects = ['beer', 'clock', 'drug']
+  var indexRandom = Math.floor(Math.random()*possibleObjects.length)
+
+  console.log(possibleObjects[indexRandom])
+
+  var $hideObject = $('<div>').attr('id', 'hideObject').addClass(possibleObjects[indexRandom] + ' animated fadeInDownBig').css({
+    position: 'absolute',
+    top: board.height - 20,
+    left: this.x,
+    height: '20px',
+    width: '20px',
+    background: 'red'
+  })
+  $('#board').prepend($hideObject)
 }

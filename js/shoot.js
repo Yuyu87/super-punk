@@ -17,8 +17,8 @@ Shot.prototype._renderShot = function() {
     height: this.height,
     width: this.width,
     position:'absolute',
-    background: 'green'});
-  $('#board').prepend($shot);
+    background: 'green'})
+  $('#board').prepend($shot)
 }
 
 Shot.prototype._render = function(){
@@ -50,7 +50,7 @@ Shot.prototype.growUntilCollision = function (){
 }
 
 Shot.prototype._hitBoardTop = function(){
-  return this.y == 0
+  return this.y <= 0
 }
 
 Shot.prototype.ballHitShot = function (ballId){

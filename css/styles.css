@@ -48,3 +48,8 @@ body{
 .walk-right{
   background-image: url('../img/walk-right.gif') !important;
 }
+
+#hideObject{
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+}
