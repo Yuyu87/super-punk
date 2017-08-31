@@ -1,5 +1,6 @@
 body{
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Underdog', cursive;
+  font-size: 2em;
   background-image: url('../img/background.png');
   background-repeat: no-repeat;
   background-size: cover;
@@ -58,6 +59,8 @@ body{
 }
 
 #instructions{
+  font-family: 'Underdog', cursive;
+  font-size: 2em;
   margin-left: 40px;
   color: #fff;
   -moz-animation-delay: 3s;
@@ -66,6 +69,12 @@ body{
 
 a{
   cursor: pointer;
+  margin-top: 60px;
+}
+
+.author{
+  text-align: right;
+  margin-top: 100px;
 }
 
 #board{
