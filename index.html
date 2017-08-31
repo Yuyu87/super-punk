@@ -6,18 +6,43 @@
   <meta http-equiv='X-UA-Compatible' content='ie=edge'>
   <link rel='stylesheet' type='text/css' href='css/styles.css'>
   <link rel='stylesheet' type='text/css' href='css/animate.css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Press+Start+2P'>
   <title>Super Punk</title>
 </head>
 <body>
+  <div class="container">
+    <div class="row row-pang">
+      <div class="col-sm-3"></div>
+      <div id="super-punk" class="col-sm-6 animated rotateIn"></div>
+      <div class="col-sm-3"></div>
+    </div>
+
+    <div class="row row-pang">
+      <div class="col-sm-2"></div>
+      <div id="pang-p" class="col-sm-2 letter-pang animated zoomInDown"></div>
+      <div id="pang-u" class="col-sm-2 letter-pang animated zoomInDown"></div>
+      <div id="pang-n" class="col-sm-2 letter-pang animated zoomInDown"></div>
+      <div id="pang-k" class="col-sm-2 letter-pang animated zoomInDown"></div>
+      <div class="col-sm-2"></div>
+    </div>
+
+    <div id="instructions" class="row row-pang animated fadeIn">
+      <h2>INSTRUCCIONES</h2>
+      <div class="col-sm-6">
+        <ul>
+          <li><big>&uarr;</big> : Disparar</li>
+          <li><big>&larr;</big> : Mover a la izquierda</li>
+          <li><big>&rarr;</big> : Mover a la derecha</li>
+        </ul>
+      </div>
+      <div class="col-sm-4">
+        <a class="btn btn-success" href="game.html">PLAY</a>
+      </div>
+    </div>
+  </div>
   <script type='text/javascript' src='https://code.jquery.com/jquery-3.1.1.slim.min.js'></script>
-  <script type='text/javascript' src='lib/jquery-collision.js'></script>
-  <script type='text/javascript' src='js/game.js'></script>
-  <script type='text/javascript' src='js/board.js'></script>
-  <script type='text/javascript' src='js/actor.js'></script>
-  <script type='text/javascript' src='js/shoot.js'></script>
-  <script type='text/javascript' src='js/ball.js'></script>
-  <script type='text/javascript' src='js/player.js'></script>
-  <script type='text/javascript' src='js/index.js'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

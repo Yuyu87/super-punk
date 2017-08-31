@@ -1,5 +1,71 @@
 body{
   font-family: 'Press Start 2P', cursive;
+  background-image: url('../img/background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.row-pang{
+  margin: 20px;
+}
+
+.letter-pang{
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100px;
+  margin: 0;
+}
+
+#super-punk{
+  background-image: url('../img/super.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 200px;
+  margin-top: 40px;
+  -moz-animation-delay: 2.5s;
+  -webkit-animation-delay: 2.5s;
+}
+
+#pang-p{
+  background-image: url('../img/p.png');
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+}
+
+#pang-u{
+  background-image: url('../img/u.png');
+  -moz-animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+}
+
+#pang-n{
+  background-image: url('../img/n.png');
+  -moz-animation-delay: 1.5s;
+  -webkit-animation-delay: 1.5s;
+}
+
+#pang-k{
+  background-image: url('../img/k.png');
+  -moz-animation-delay: 2s;
+  -webkit-animation-delay: 2s;
+}
+
+#yourElement {
+  -vendor-animation-duration: 3s;
+  -moz-animation-delay: 2s;
+  -webkit-animation-delay: 2s;
+  -vendor-animation-iteration-count: infinite;
+}
+
+#instructions{
+  margin-left: 40px;
+  color: #fff;
+  -moz-animation-delay: 3s;
+  -webkit-animation-delay: 3s;
+}
+
+a{
+  cursor: pointer;
 }
 
 #board{
