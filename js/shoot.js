@@ -33,20 +33,13 @@ Shot.prototype.restart = function(){
   $('#' + this.identifier).remove()
 }
 
-Shot.prototype.growUntilCollision = function (){
-  var collision = false
+Shot.prototype.growUntilCollision = function (board){
+  this.y -= this.speed
+  this.height = board.height - this.y
 
-  if(!collision){
-    this.y -= this.speed
-    this.height = board.height - this.y
+  this._render()
 
-    this._render()
-
-    if(this._hitBoardTop()){
-      collision = true
-      $('#' + this.identifier).remove()
-    }
-  }
+  if(this._hitBoardTop()) $('#' + this.identifier).remove()
 }
 
 Shot.prototype._hitBoardTop = function(){

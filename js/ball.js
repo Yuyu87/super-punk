@@ -1,9 +1,9 @@
-function Ball(x, y, speed, width, identifier, hideObject){
+function Ball(x, y, speed, width, identifier, board){
   Actor.call(this, x, y, speed)
   this.width = width
   this.height = width
   this.identifier = identifier
-  this._renderBall()
+  this._renderBall(board)
   this.speedX = this._randomDirection()
   this.speedY = this._randomDirection()
   this._calculatePoints()
@@ -50,30 +50,32 @@ Ball.prototype.restart = function(){
   $('#' + this.identifier).remove()
 }
 
-Ball.prototype.move = function(){
+Ball.prototype.move = function(board, balls, shot){
   this.y += this.speedY
   this.x += this.speedX
-  this._checkCollision()
+  this._checkCollision(board, balls, shot)
 
   this._render()
 }
 
-Ball.prototype._checkCollision = function(){
-  if(this._hitBoardTop() || this._hitBoardBottom()) this.speedY*=-1
-  if(this._hitBoardLeft() || this._hitBoardRight()) this.speedX*=-1
+Ball.prototype._checkCollision = function(board, balls, shot){
+  if(this._hitBoardTop() || this._hitBoardBottom(board)) this.speedY*=-1
+  if(this._hitBoardLeft() || this._hitBoardRight(board)) this.speedX*=-1
 
-  if(this._hitTheShotOnRight()) this.divideOnTwoOrDisappear()
-  if(this._hitTheShotOnLeft()) this.divideOnTwoOrDisappear()
+  if(shot != undefined){
+    if(this._hitTheShotOnRight(board, shot)) this.divideOnTwoOrDisappear(board, balls, shot)
+    if(this._hitTheShotOnLeft(board, shot)) this.divideOnTwoOrDisappear(board, balls, shot)
+  }
 }
 
-Ball.prototype._hitTheShotOnRight = function(){
+Ball.prototype._hitTheShotOnRight = function(board, shot){
   if($('#shot').length != 0)
     if(this.x == shot.x + shot.width && this.y > board.height - shot.height)
       return true
   else return false
 }
 
-Ball.prototype._hitTheShotOnLeft = function(){
+Ball.prototype._hitTheShotOnLeft = function(shot){
   if($('#shot').length != 0)
     if(this.x + this.width == shot.x && this.y > board.height - shot.height)
       return true
@@ -84,7 +86,7 @@ Ball.prototype._hitBoardTop = function(){
   return this.y == 0
 }
 
-Ball.prototype._hitBoardBottom = function(){
+Ball.prototype._hitBoardBottom = function(board){
   return this.y == board.height - this.height
 }
 
@@ -92,27 +94,27 @@ Ball.prototype._hitBoardLeft = function(){
   return this.x == 0
 }
 
-Ball.prototype._hitBoardRight = function(){
+Ball.prototype._hitBoardRight = function(board){
   return this.x == board.width - this.width
 }
 
-Ball.prototype.divideOnTwoOrDisappear = function(){
+Ball.prototype.divideOnTwoOrDisappear = function(board, balls, shot){
   $('#' + this.identifier).remove()
   $('#' + shot.identifier).remove()
 
-  if(this._hasHideObject()) this._showHideObject()
+  if(this._hasHideObject()) this._showHideObject(board)
 
   if(this.width>20){
     balls.push(new Ball(this.x, this.y, this.speed,
-      this.width/2, 'ball' + this._lastIdOn(balls)))
+      this.width/2, 'ball' + this.lastIdOn(balls)))
     balls.push(new Ball(this.x + this.width/2, this.y ,
-      this.speed, this.width/2, 'ball' + this._lastIdOn(balls)))
+      this.speed, this.width/2, 'ball' + this.lastIdOn(balls)))
 
     balls.splice(balls.indexOf(this), 1)
   }
 }
 
-Ball.prototype._lastIdOn = function (){
+Ball.prototype.lastIdOn = function (balls){
   return parseInt(balls[balls.length-1].identifier.slice(4)) + 1
 }
 
@@ -121,7 +123,7 @@ Ball.prototype._hasHideObject = function (){
   return true
 }
 
-Ball.prototype._showHideObject = function (){
+Ball.prototype._showHideObject = function (board){
   var possibleObjects = ['beer', 'clock', 'drug']
   var indexRandom = Math.floor(Math.random()*possibleObjects.length)
 

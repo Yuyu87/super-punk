@@ -1,4 +1,4 @@
-function Player(x, y, width, height, speed, lifes, identifier){
+function Player(x, y, width, height, speed, lifes, identifier, board){
   Actor.call(this, x, y, speed)
   this.width = width
   this.height = height
@@ -6,8 +6,8 @@ function Player(x, y, width, height, speed, lifes, identifier){
   this.identifier = identifier
   this.points = 0
   this._renderPlayer()
-  this._renderLifes()
-  this._renderPoints()
+  this._renderLifes(board)
+  this._renderPoints(board)
 }
 
 Player.prototype = Object.create(Player.prototype)
@@ -24,7 +24,7 @@ Player.prototype._renderPlayer = function(){
   $('#board').append($player)
 }
 
-Player.prototype._renderLifes = function(){
+Player.prototype._renderLifes = function(board){
   var $life
   for(var i = 0; i < this.lifes; i++){
     $life = $('<div>').attr('id', 'life' + (i + 1)).css({
@@ -39,7 +39,7 @@ Player.prototype._renderLifes = function(){
   }
 }
 
-Player.prototype._renderPoints = function(){
+Player.prototype._renderPoints = function(board){
   var $points = $('<div>').attr('id', 'points').css({
       top: board.top,
       position: 'relative',
@@ -60,7 +60,7 @@ Player.prototype._render = function(direction){
   // $('#' + this.identifier).css({left: this.x}).removeClass().addClass('player').addClass('walk-' + direction)
 }
 
-Player.prototype.restart = function(){
+Player.prototype.restart = function(board){
   this.x = board.width/2 - this.width/2
 }
 
