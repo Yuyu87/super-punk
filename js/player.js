@@ -29,6 +29,7 @@ Player.prototype._renderLifes = function(board){
   for(var i = 0; i < this.lifes; i++){
     $life = $('<div>').attr('id', 'life' + (i + 1)).css({
       top: board.top,
+      left: board.left,
       position: 'relative',
       display: 'inline-block',
       height: 50,
@@ -42,16 +43,17 @@ Player.prototype._renderLifes = function(board){
 Player.prototype._renderPoints = function(board){
   var $points = $('<div>').attr('id', 'points').css({
     top: board.top,
+    left: board.left,
     position: 'relative',
     display: 'inline-block',
     height: 50,
-    width: 30,
+    width: 200,
     margin: '5px'
-  }).text(this.points)
+  }).text(this.points + ' pts')
   $('body').append($points)
 }
 
-Player.prototype.updatePoints = function(){ $('#points').text(this.points) }
+Player.prototype.updatePoints = function(){ $('#points').text(this.points + ' pts') }
 
 Player.prototype._render = function(){
   $('#' + this.identifier).css({left: this.x})

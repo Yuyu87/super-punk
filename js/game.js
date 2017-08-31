@@ -1,5 +1,5 @@
 function Game(){
-  this.board = new Board(400, 700, 40, 40)
+  this.board = new Board(400, 700, 100, 90)
   this.player1 = new Player(this.board.width/2 - 20, this.board.height - 60, 40, 60, 5, 3, 'player1', this.board)
   this._addFirstBall(this.board)
   this.shot
@@ -9,7 +9,8 @@ function Game(){
   this.intervalGameTime = 50
   this.intervalCreateBallTime = 10000
   this.numBallsHit = 0
-  this.level = 0
+  this.level = 1
+  this._renderLevel()
   this.levelsToWin = 5
   this.ballsSpeed = 5
   this.gameTheme = new Audio('./audio/super_punk.ogg');
@@ -65,11 +66,11 @@ Game.prototype.updateState = function(){
 
   if(this.numBallsHit!=0 && this.numBallsHit % 5 === 0){
     this.level++
+    this._updateLevel()
     this.numBallsHit = 0
-    console.log('NIVEL ' + this.level)
     this.balls.forEach((ball)=>{ ball.initMovement(
-      parseInt((ball.speedX *= 1.1).toFixed(2)),
-      parseInt((ball.speedY *= 1.1).toFixed(2)))})
+      parseInt((ball.speedX *= 1.5).toFixed(2)),
+      parseInt((ball.speedY *= 1.5).toFixed(2)))})
   }
 
   if(this.level == this.levelsToWin){
@@ -77,6 +78,21 @@ Game.prototype.updateState = function(){
     this._youWin()
   }
 }
+
+Game.prototype._renderLevel = function(){
+  var $level = $('<div>').attr('id', 'level').css({
+    top: this.board.top,
+    left: this.board.left,
+    position: 'relative',
+    display: 'inline-block',
+    height: 50,
+    width: 200,
+    margin: '5px'
+  }).text('Level :' + this.level)
+  $('body').append($level)
+}
+
+Game.prototype._updateLevel = function(){ $('#level').text('Level: ' + this.level) }
 
 Game.prototype.exitsShot = function () {
   return $('#shot').length != 0
