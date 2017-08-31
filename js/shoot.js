@@ -29,9 +29,7 @@ Shot.prototype._render = function(){
   })
 }
 
-Shot.prototype.restart = function(){
-  $('#' + this.identifier).remove()
-}
+Shot.prototype.restart = function(){ $('#' + this.identifier).remove() }
 
 Shot.prototype.growUntilCollision = function (board){
   this.y -= this.speed
@@ -42,9 +40,7 @@ Shot.prototype.growUntilCollision = function (board){
   if(this._hitBoardTop()) $('#' + this.identifier).remove()
 }
 
-Shot.prototype._hitBoardTop = function(){
-  return this.y <= 0
-}
+Shot.prototype._hitBoardTop = function(){ return this.y <= 0 }
 
 Shot.prototype.ballHitShot = function (ballId){
   if($(ballId).collision('#' + this.identifier).attr('id') == this.identifier){

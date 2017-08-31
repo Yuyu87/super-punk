@@ -46,9 +46,7 @@ Ball.prototype._randomDirection = function() {
   return directions[indexRandom]
 }
 
-Ball.prototype.restart = function(){
-  $('#' + this.identifier).remove()
-}
+Ball.prototype.restart = function(){ $('#' + this.identifier).remove() }
 
 Ball.prototype.move = function(board, balls, shot){
   this.y += this.speedY
@@ -82,20 +80,16 @@ Ball.prototype._hitTheShotOnLeft = function(shot){
   else return false
 }
 
-Ball.prototype._hitBoardTop = function(){
-  return this.y == 0
-}
+Ball.prototype._hitBoardTop = function(){ return this.y <= 0 }
 
 Ball.prototype._hitBoardBottom = function(board){
-  return this.y == board.height - this.height
+  return this.y >= board.height - this.height
 }
 
-Ball.prototype._hitBoardLeft = function(){
-  return this.x == 0
-}
+Ball.prototype._hitBoardLeft = function(){ return this.x <= 0 }
 
 Ball.prototype._hitBoardRight = function(board){
-  return this.x == board.width - this.width
+  return this.x >= board.width - this.width
 }
 
 Ball.prototype.divideOnTwoOrDisappear = function(board, balls, shot){
@@ -119,15 +113,12 @@ Ball.prototype.lastIdOn = function (balls){
 }
 
 Ball.prototype._hasHideObject = function (){
-  // return Math.round(Math.random()*10) + 1 > 7 && $('#hideObject').length == 0
-  return true
+  return Math.round(Math.random()*10) + 1 > 7 && $('#hideObject').length == 0
 }
 
 Ball.prototype._showHideObject = function (board){
   var possibleObjects = ['beer', 'clock', 'drug']
   var indexRandom = Math.floor(Math.random()*possibleObjects.length)
-
-  console.log(possibleObjects[indexRandom])
 
   var $hideObject = $('<div>').attr('id', 'hideObject').addClass(possibleObjects[indexRandom] + ' animated fadeInDownBig').css({
     top: board.height - 30,
@@ -141,7 +132,7 @@ Ball.prototype.stopMovement = function (){
   this.speedY = 0
 }
 
-Ball.prototype.initMovement = function (speedX, speedY){
+Ball.prototype.restartMovement = function (speedX, speedY){
   this.speedX = speedX
   this.speedY = speedY
 }

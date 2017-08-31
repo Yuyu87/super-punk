@@ -1,7 +1,7 @@
 function Game(){
   this.board = new Board(400, 700, 40, 40)
   this.player1 = new Player(this.board.width/2 - 20, this.board.height - 60, 40, 60, 5, 3, 'player1', this.board)
-  this.addBall(this.board)
+  this._addFirstBall(this.board)
   this.shot
   this.intervalCounter = 0
   this.gameIntervalId
@@ -12,11 +12,11 @@ Game.prototype.start = function(){
   this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalTime);
 }
 
-Game.prototype.restart = function(){
+Game.prototype._restart = function(){
   this.player1.restart(this.board)
-  if(this.exitsShot()) this.shot.restart()
+  if(this._exitsShot()) this.shot.restart()
   this.balls.forEach((ball)=>{ball.restart()})
-  this.addBall(this.board)
+  this._addFirstBall(this.board)
 
   this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalTime);
 }
@@ -24,16 +24,17 @@ Game.prototype.restart = function(){
 Game.prototype.updateState = function(){
   this.intervalCounter++
 
-  if(this.exitsShot()) this.shot.growUntilCollision(this.board)
+  if(this._exitsShot()) this.shot.growUntilCollision(this.board)
 
   this.balls.forEach((ball)=>{
-    if(this.exitsShot()) ball.move(this.board, this.balls, this.shot)
+    if(this._exitsShot()) ball.move(this.board, this.balls, this.shot)
     else ball.move(this.board, this.balls)})
 
   this.balls.forEach((ball)=>{
     if(this.player1.ballHitPlayer('#' + ball.identifier)){
       clearInterval(this.gameIntervalId)
-      if(this.player1.lifes>=0) this.restart()
+      this.intervalCounter = 0
+      if(this.player1.lifes>=0) this._restart()
       else this._gameOver()
     }
     if($('#shot').length != 0)
@@ -54,7 +55,7 @@ Game.prototype.updateState = function(){
 
 Game.prototype._gameOver = function(){
   $('#' + this.player1.identifier).remove()
-  if(this.exitsShot()) shot.restart()
+  if(this._exitsShot()) this.shot.restart()
   this.balls.forEach((ball)=>{ball.restart()})
   $('#board').remove()
 
@@ -62,7 +63,7 @@ Game.prototype._gameOver = function(){
   $('body').append($gameOver)
 }
 
-Game.prototype.exitsShot = function () {
+Game.prototype._exitsShot = function () {
   return $('#shot').length != 0
 }
 
@@ -70,7 +71,7 @@ Game.prototype.lastIdOnBalls = function(){
   return parseInt(this.balls[this.balls.length-1].identifier.slice(4)) + 1
 }
 
-Game.prototype.addBall = function(){
+Game.prototype._addFirstBall = function(){
   this.balls = []
   this.balls.push(new Ball(200, 100, 5, 80, 'ball' + this.balls.length, this.board))
 }
@@ -93,7 +94,7 @@ Game.prototype.checkObject = function(){
       this.balls.forEach((ball)=>{ball.stopMovement() })
 
       setTimeout(()=>{
-        this.balls.forEach((ball)=>{ ball.initMovement(ballNormalSpeedX, ballNormalSpeedY)})
+        this.balls.forEach((ball)=>{ ball.restartMovement(ballNormalSpeedX, ballNormalSpeedY)})
       }, 5000);
     }
 

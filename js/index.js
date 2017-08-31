@@ -1,9 +1,3 @@
-// var board = new Board(400, 700, 40, 40)
-// var player1 = new Player(board.width/2 - 20, board.height - 60, 40, 60, 5, 3, 'player1')
-// var balls = []
-// balls.push(new Ball(200, 100, 5, 80, 'ball' + balls.length))
-// var shot
-
 var game
 $(document).ready(function() {
 //   var windowWidth = window.innerWidth || document.documentElement.clientWidth
