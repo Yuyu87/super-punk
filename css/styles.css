@@ -50,6 +50,27 @@ body{
 }
 
 #hideObject{
-  -webkit-animation-duration: 1s;
-  -moz-animation-duration: 1s;
+  position: absolute;
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  height: 30px;
+  width: 30px;
+}
+
+.beer{
+  background-image: url('../img/beer.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.clock{
+  background-image: url('../img/clock.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.drug{
+  background-image: url('../img/pill.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }

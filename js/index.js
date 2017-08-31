@@ -55,21 +55,21 @@ function restartGame(){
 function checkObject(){
   if($('#' + player1.identifier).collision('#hideObject').attr('id') == 'hideObject'){
     if($('#hideObject').hasClass('beer')){
-      player1.speed *=2
-      setTimeout(()=>{ player1.speed /=2 }, 3000);
+      player1.speed2X()
+      setTimeout(()=>{ player1.divideSpeedBy2() }, 3000);
     }
+
     if($('#hideObject').hasClass('clock')){
       var ballNormalSpeedX = balls[0].speedX
       var ballNormalSpeedY = balls[0].speedY
 
-      balls.forEach((ball)=>{ball.speedX = 0; ball.speedY = 0; })
+      balls.forEach((ball)=>{ball.stopMovement() })
 
       setTimeout(()=>{
-        balls.forEach((ball)=>{
-          ball.speedX = ballNormalSpeedX
-          ball.speedY = ballNormalSpeedY })
+        balls.forEach((ball)=>{ ball.initMovement(ballNormalSpeedX, ballNormalSpeedY)})
       }, 3000);
     }
+
     if($('#hideObject').hasClass('drug')){
       balls.forEach((ball)=>{
         $('#' + ball.identifier).addClass('animated flash').css({

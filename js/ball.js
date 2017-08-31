@@ -117,7 +117,8 @@ Ball.prototype._lastIdOn = function (){
 }
 
 Ball.prototype._hasHideObject = function (){
-  return Math.round(Math.random()*10) + 1 > 7 && $('#hideObject').length == 0
+  // return Math.round(Math.random()*10) + 1 > 7 && $('#hideObject').length == 0
+  return true
 }
 
 Ball.prototype._showHideObject = function (){
@@ -127,12 +128,18 @@ Ball.prototype._showHideObject = function (){
   console.log(possibleObjects[indexRandom])
 
   var $hideObject = $('<div>').attr('id', 'hideObject').addClass(possibleObjects[indexRandom] + ' animated fadeInDownBig').css({
-    position: 'absolute',
-    top: board.height - 20,
-    left: this.x,
-    height: '20px',
-    width: '20px',
-    background: 'red'
+    top: board.height - 30,
+    left: this.x
   })
   $('#board').prepend($hideObject)
+}
+
+Ball.prototype.stopMovement = function (){
+  this.speedX = 0
+  this.speedY = 0
+}
+
+Ball.prototype.initMovement = function (speedX, speedY){
+  this.speedX = speedX
+  this.speedY = speedY
 }

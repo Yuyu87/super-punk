@@ -80,3 +80,11 @@ Player.prototype.ballHitPlayer = function(ballId){
   }
   return false
 }
+
+Player.prototype.speed2X = function (){
+  this.speed *= 2
+}
+
+Player.prototype.divideSpeedBy2 = function (){
+  this.speed /= 2
+}
