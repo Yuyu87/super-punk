@@ -14,6 +14,7 @@ function Game(){
   this.ballsSpeed = 5
   this.gameTheme = new Audio('./audio/super_punk.ogg');
   this.audioExplosion = new Audio('./audio/explosion.wav');
+  this.audioDie = new Audio('./audio/die.ogg');
 
 }
 
@@ -45,6 +46,7 @@ Game.prototype.updateState = function(){
 
   this.balls.forEach((ball)=>{
     if(this.player1.ballHitPlayer('#' + ball.identifier)){
+      this.audioDie.play()
       clearInterval(this.gameIntervalId)
       if(this.player1.lifes>=0) this._restart()
       else this._gameOver()
