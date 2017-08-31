@@ -12,9 +12,13 @@ function Game(){
   this.level = 0
   this.levelsToWin = 5
   this.ballsSpeed = 5
+  this.gameTheme = new Audio('./audio/super_punk.ogg');
+  this.audioExplosion = new Audio('./audio/explosion.wav');
+
 }
 
 Game.prototype.start = function(){
+  this._startThemeMusic()
   this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalGameTime)
   this.createBallIntervalId = setInterval(this._addBall.bind(this), this.intervalCreateBallTime)
 }
@@ -50,6 +54,7 @@ Game.prototype.updateState = function(){
         this.numBallsHit++
         this.shot.player.points += ball.points
         ball.divideOnTwoOrDisappear(this.board, this.balls, this.shot)
+        this.audioExplosion.play()
       }
   })
 
@@ -140,8 +145,18 @@ Game.prototype._youWin = function(){
 }
 
 Game.prototype._cleanBoard = function(){
+  this._stopThemeMusic()
+
   $('#' + this.player1.identifier).remove()
   if(this.exitsShot()) this.shot.restart()
   this.balls.forEach((ball)=>{ball.restart()})
   $('#board').remove()
+}
+
+Game.prototype._startThemeMusic = function () {
+  this.gameTheme.play();
+}
+
+Game.prototype._stopThemeMusic = function () {
+  this.gameTheme.pause();
 }
