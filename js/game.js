@@ -19,7 +19,7 @@ function Game(){
 }
 
 Game.prototype.start = function(){
-  this._startThemeMusic()
+  this.gameTheme.play();
   this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalGameTime)
   this.createBallIntervalId = setInterval(this._addBall.bind(this), this.intervalCreateBallTime)
 }
@@ -48,8 +48,7 @@ Game.prototype.updateState = function(){
     if(this.player1.ballHitPlayer('#' + ball.identifier)){
       this.audioDie.play()
       clearInterval(this.gameIntervalId)
-      if(this.player1.lifes>=0) this._restart()
-      else this._gameOver()
+      setTimeout(()=>{ this._restartOrFinish() }, 1000);
     }
     if(this.exitsShot())
       if(this.shot.hitBall(this.board, ball)){
@@ -147,7 +146,7 @@ Game.prototype._youWin = function(){
 }
 
 Game.prototype._cleanBoard = function(){
-  this._stopThemeMusic()
+  this.gameTheme.pause()
 
   $('#' + this.player1.identifier).remove()
   if(this.exitsShot()) this.shot.restart()
@@ -155,10 +154,7 @@ Game.prototype._cleanBoard = function(){
   $('#board').remove()
 }
 
-Game.prototype._startThemeMusic = function () {
-  this.gameTheme.play();
-}
-
-Game.prototype._stopThemeMusic = function () {
-  this.gameTheme.pause();
+Game.prototype._restartOrFinish = function () {
+  if(this.player1.lifes>=0) this._restart()
+  else this._gameOver()
 }

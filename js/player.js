@@ -59,6 +59,7 @@ Player.prototype._render = function(){
 
 Player.prototype.restart = function(board){
   this.x = board.width/2 - this.width/2
+  this._render()
 }
 
 Player.prototype.move = function (direction) {
