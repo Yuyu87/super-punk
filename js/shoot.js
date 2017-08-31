@@ -42,10 +42,24 @@ Shot.prototype.growUntilCollision = function (board){
 
 Shot.prototype._hitBoardTop = function(){ return this.y <= 0 }
 
-Shot.prototype.ballHitShot = function (ballId){
-  if($(ballId).collision('#' + this.identifier).attr('id') == this.identifier){
+Shot.prototype.hitBall = function (board, ball){
+  if($('#' + ball.identifier).collision('#' + this.identifier).attr('id') == this.identifier){
     $('#' + this.identifier).remove()
     return true
   }
+
+  if(this._hitTheShotOnRight(board, ball) || this._hitTheShotOnLeft(board, ball)){
+    $('#' + this.identifier).remove()
+    return true
+  }
+
   return false
+}
+
+Shot.prototype._hitTheShotOnRight = function(board, ball){
+  return ball.x == this.x + this.width && ball.y > board.height - this.height
+}
+
+Shot.prototype._hitTheShotOnLeft = function(board, ball){
+  return ball.x + ball.width == this.x && ball.y > board.height - this.height
 }

@@ -51,33 +51,14 @@ Ball.prototype.restart = function(){ $('#' + this.identifier).remove() }
 Ball.prototype.move = function(board, balls, shot){
   this.y += this.speedY
   this.x += this.speedX
-  this._checkCollision(board, balls, shot)
+  this._checkCollisionWithBoard(board, balls, shot)
 
   this._render()
 }
 
-Ball.prototype._checkCollision = function(board, balls, shot){
+Ball.prototype._checkCollisionWithBoard = function(board, balls, shot){
   if(this._hitBoardTop() || this._hitBoardBottom(board)) this.speedY*=-1
   if(this._hitBoardLeft() || this._hitBoardRight(board)) this.speedX*=-1
-
-  if(shot != undefined){
-    if(this._hitTheShotOnRight(board, shot)) this.divideOnTwoOrDisappear(board, balls, shot)
-    if(this._hitTheShotOnLeft(board, shot)) this.divideOnTwoOrDisappear(board, balls, shot)
-  }
-}
-
-Ball.prototype._hitTheShotOnRight = function(board, shot){
-  if($('#shot').length != 0)
-    if(this.x == shot.x + shot.width && this.y > board.height - shot.height)
-      return true
-  else return false
-}
-
-Ball.prototype._hitTheShotOnLeft = function(shot){
-  if($('#shot').length != 0)
-    if(this.x + this.width == shot.x && this.y > board.height - shot.height)
-      return true
-  else return false
 }
 
 Ball.prototype._hitBoardTop = function(){ return this.y <= 0 }
@@ -132,7 +113,7 @@ Ball.prototype.stopMovement = function (){
   this.speedY = 0
 }
 
-Ball.prototype.restartMovement = function (speedX, speedY){
+Ball.prototype.initMovement = function (speedX, speedY){
   this.speedX = speedX
   this.speedY = speedY
 }

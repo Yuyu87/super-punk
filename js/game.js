@@ -5,65 +5,74 @@ function Game(){
   this.shot
   this.intervalCounter = 0
   this.gameIntervalId
-  this.intervalTime = 50
+  this.createBallIntervalId
+  this.intervalGameTime = 50
+  this.intervalCreateBallTime = 10000
+  this.numBallsHit = 0
+  this.level = 0
+  this.levelsToWin = 5
+  this.ballsSpeed = 5
 }
 
 Game.prototype.start = function(){
-  this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalTime);
+  this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalGameTime)
+  this.createBallIntervalId = setInterval(this._addBall.bind(this), this.intervalCreateBallTime)
 }
 
 Game.prototype._restart = function(){
+  this.intervalCounter = 0
+  this.numBallsHit = 0
   this.player1.restart(this.board)
-  if(this._exitsShot()) this.shot.restart()
+  if(this.exitsShot()) this.shot.restart()
   this.balls.forEach((ball)=>{ball.restart()})
   this._addFirstBall(this.board)
 
-  this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalTime);
+  this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalGameTime)
 }
 
 Game.prototype.updateState = function(){
   this.intervalCounter++
 
-  if(this._exitsShot()) this.shot.growUntilCollision(this.board)
+  if(this.exitsShot()) this.shot.growUntilCollision(this.board)
 
   this.balls.forEach((ball)=>{
-    if(this._exitsShot()) ball.move(this.board, this.balls, this.shot)
+    if(this.exitsShot()) ball.move(this.board, this.balls, this, this.shot)
     else ball.move(this.board, this.balls)})
 
   this.balls.forEach((ball)=>{
     if(this.player1.ballHitPlayer('#' + ball.identifier)){
       clearInterval(this.gameIntervalId)
-      this.intervalCounter = 0
       if(this.player1.lifes>=0) this._restart()
       else this._gameOver()
     }
-    if($('#shot').length != 0)
-      if(this.shot.ballHitShot('#' + ball.identifier)){
+    if(this.exitsShot())
+      if(this.shot.hitBall(this.board, ball)){
+        this.numBallsHit++
         this.shot.player.points += ball.points
         ball.divideOnTwoOrDisappear(this.board, this.balls, this.shot)
       }
   })
 
   if($('#hideObject').length != 0) this.checkObject()
+
   this.player1.updatePoints()
 
-  if(this.intervalCounter % 200 === 0)
-    setTimeout(()=>{
-      this.balls.push(new Ball(200, 100, 5, 80, 'ball' + this.lastIdOnBalls()))
-    }, 1000)
+  if(this.numBallsHit!=0 && this.numBallsHit % 5 === 0){
+    this.level++
+    this.numBallsHit = 0
+    console.log('NIVEL ' + this.level)
+    this.balls.forEach((ball)=>{ ball.initMovement(
+      parseInt((ball.speedX *= 1.1).toFixed(2)),
+      parseInt((ball.speedY *= 1.1).toFixed(2)))})
+  }
+
+  if(this.level == this.levelsToWin){
+    clearInterval(this.gameIntervalId)
+    this._youWin()
+  }
 }
 
-Game.prototype._gameOver = function(){
-  $('#' + this.player1.identifier).remove()
-  if(this._exitsShot()) this.shot.restart()
-  this.balls.forEach((ball)=>{ball.restart()})
-  $('#board').remove()
-
-  $gameOver = $('<div>').attr('id', 'game-over').text('GAME OVER')
-  $('body').append($gameOver)
-}
-
-Game.prototype._exitsShot = function () {
+Game.prototype.exitsShot = function () {
   return $('#shot').length != 0
 }
 
@@ -74,6 +83,10 @@ Game.prototype.lastIdOnBalls = function(){
 Game.prototype._addFirstBall = function(){
   this.balls = []
   this.balls.push(new Ball(200, 100, 5, 80, 'ball' + this.balls.length, this.board))
+}
+
+Game.prototype._addBall = function(){
+  this.balls.push(new Ball(200, 100, 5, 80, 'ball' + this.lastIdOnBalls()))
 }
 
 Game.prototype.createShot = function(){
@@ -94,7 +107,7 @@ Game.prototype.checkObject = function(){
       this.balls.forEach((ball)=>{ball.stopMovement() })
 
       setTimeout(()=>{
-        this.balls.forEach((ball)=>{ ball.restartMovement(ballNormalSpeedX, ballNormalSpeedY)})
+        this.balls.forEach((ball)=>{ ball.initMovement(ballNormalSpeedX, ballNormalSpeedY)})
       }, 5000);
     }
 
@@ -110,4 +123,25 @@ Game.prototype.checkObject = function(){
     }
     $('#hideObject').remove()
   }
+}
+
+Game.prototype._gameOver = function(){
+  this._cleanBoard()
+
+  $gameOver = $('<div>').attr('id', 'game-over').text('GAME OVER')
+  $('body').append($gameOver)
+}
+
+Game.prototype._youWin = function(){
+  this._cleanBoard()
+
+  $youWin = $('<div>').attr('id', 'you-win').text('YOU WIN')
+  $('body').append($youWin)
+}
+
+Game.prototype._cleanBoard = function(){
+  $('#' + this.player1.identifier).remove()
+  if(this.exitsShot()) this.shot.restart()
+  this.balls.forEach((ball)=>{ball.restart()})
+  $('#board').remove()
 }
