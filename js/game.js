@@ -1,6 +1,7 @@
 function Game(){
   this.board = new Board(400, 700, 100, 90)
   this.player1 = new Player(this.board.width/2 - 20, this.board.height - 60, 40, 60, 5, 3, 'player1', this.board)
+  this.ballsSpeed = 5
   this._addFirstBall(this.board)
   this.shot
   this.intervalCounter = 0
@@ -12,11 +13,9 @@ function Game(){
   this.level = 1
   this._renderLevel()
   this.levelsToWin = 5
-  this.ballsSpeed = 5
   this.gameTheme = new Audio('./audio/super_punk.ogg');
   this.audioExplosion = new Audio('./audio/explosion.wav');
   this.audioDie = new Audio('./audio/die.ogg');
-
 }
 
 Game.prototype.start = function(){
@@ -69,6 +68,7 @@ Game.prototype.updateState = function(){
 
   if(this.numBallsHit!=0 && this.numBallsHit % 5 === 0){
     this.level++
+    this.ballsSpeed *= 1.5
     this._updateLevel()
     this.numBallsHit = 0
     this.balls.forEach((ball)=>{ ball.initMovement(
@@ -114,7 +114,7 @@ Game.prototype._addFirstBall = function(){
 Game.prototype._addBall = function(){
   var ballWidth = this._randomBallWidth()
   var ballX = this._randomBallX(ballWidth)
-  this.balls.push(new Ball(ballX, 100, 5, ballWidth, 'ball' + this.lastIdOnBalls(), this.board))
+  this.balls.push(new Ball(ballX, 100, this.ballsSpeed, ballWidth, 'ball' + this.lastIdOnBalls(), this.board))
 }
 
 Game.prototype._randomBallWidth = function(){
