@@ -1,7 +1,8 @@
 body{
   font-family: 'Underdog', cursive;
   font-size: 2em;
-  background-image: url('../img/background.png');
+  background: #000 !important;
+  color: #fff !important;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -82,7 +83,7 @@ a{
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  border: 10px ridge green; 
+  border: 10px ridge green;
 
 }
 

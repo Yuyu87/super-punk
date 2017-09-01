@@ -17,7 +17,7 @@ Shot.prototype._renderShot = function() {
     height: this.height,
     width: this.width,
     position:'absolute',
-    border: '2px solid',
+    border: '2px solid black',
     background: 'green'})
   $('#board').prepend($shot)
 }
