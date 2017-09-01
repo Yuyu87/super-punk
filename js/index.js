@@ -23,7 +23,7 @@ $(document).ready(function() {
       $('#' + game.player1.identifier).addClass('walk-right')
     }
 
-    if(e.keyCode == 38){
+    if(e.keyCode == 32){
       if($('#shot').length == 0) game.createShot()
 
       $('#' + game.player1.identifier).removeClass('walk-left')

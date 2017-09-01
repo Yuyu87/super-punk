@@ -82,6 +82,8 @@ a{
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  border: 10px ridge green; 
+
 }
 
 .player{
