@@ -46,7 +46,7 @@ Game.prototype.updateState = function(){
     else ball.move(this.board, this.balls)})
 
   this.balls.forEach((ball)=>{
-    if(this.player1.ballHitPlayer('#' + ball.identifier)){
+    if(this.player1.ballHitPlayer(ball)){
       this.audioDie.play()
       clearInterval(this.gameIntervalId)
       setTimeout(()=>{ this._restartOrFinish() }, 1000);

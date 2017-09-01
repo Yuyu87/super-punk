@@ -126,8 +126,8 @@ a{
 
 #hideObject{
   position: absolute;
-  -webkit-animation-duration: 2s;
-  -moz-animation-duration: 2s;
+  -webkit-animation-duration: 3s;
+  -moz-animation-duration: 3s;
   height: 30px;
   width: 30px;
 }

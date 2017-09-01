@@ -72,12 +72,30 @@ Player.prototype.move = function (direction) {
   this._render()
 }
 
-Player.prototype.ballHitPlayer = function(ballId){
-  if($(ballId).collision('#' + this.identifier).attr('id') == this.identifier){
-    $('#life' + this.lifes).remove()
-    this.lifes--
-    return true
+Player.prototype.ballHitPlayer = function(ball){
+  if($('#' + ball.identifier).collision('#' + this.identifier).attr('id') == this.identifier){
+    if(this._borderCollisionCircleRectangle(ball)){
+      $('#life' + this.lifes).remove()
+      this.lifes--
+      return true
+    }
   }
+  return false
+}
+
+Player.prototype._borderCollisionCircleRectangle = function (ball){
+  var dxLeft = (ball.x + ball.width/2) - this.x
+  var dyLeft = (ball.y + ball.width/2) - this.y
+
+  var dxRight = (ball.x + ball.width/2) - (this.x + this.width)
+  var dyRight = (ball.y + ball.width/2) - this.y
+
+  var distanceLeft = Math.sqrt(dxLeft * dxLeft + dyLeft * dyLeft)
+  var distanceRight = Math.sqrt(dxRight * dxRight + dyRight * dyRight)
+
+  if (distanceLeft <= ball.width/2 || distanceRight <= ball.width/2)
+      return true
+      
   return false
 }
 
