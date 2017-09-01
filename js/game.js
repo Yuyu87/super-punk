@@ -149,16 +149,35 @@ Game.prototype.checkObject = function(){
 
 Game.prototype._gameOver = function(){
   this._cleanBoard()
+  this._removeLevelAndPoints()
 
-  $gameOver = $('<div>').attr('id', 'game-over').text('GAME OVER')
+  var $finalInfo = this._createFinalMsgLevelPoints()
+
+  $gameOver = $('<div>').attr('id', 'game-over').text('GAME OVER').addClass('final-msg')
+  $gameOver.append($finalInfo)
   $('body').append($gameOver)
 }
 
 Game.prototype._youWin = function(){
   this._cleanBoard()
+  this._removeLevelAndPoints()
 
-  $youWin = $('<div>').attr('id', 'you-win').text('YOU WIN')
+  var $finalInfo = this._createFinalMsgLevelPoints()
+
+  $youWin = $('<div>').attr('id', 'you-win').text('YOU WIN').addClass('final-msg')
+  $youWin.append($finalInfo)
   $('body').append($youWin)
+}
+
+Game.prototype._createFinalMsgLevelPoints = function(){
+  var $level = $('<p>').text('Level: ' + this.level)
+  var $points = $('<p>').text('Total points: ' + this.player1.points)
+  return $('<div>').append($level).append($points)
+}
+
+Game.prototype._removeLevelAndPoints = function () {
+  $('#points').remove()
+  $('#level').remove()
 }
 
 Game.prototype._cleanBoard = function(){

@@ -109,11 +109,16 @@ a{
   position: absolute;
 }
 
-#game-over{
-  height: 200px;
-  width: 300px;
+.final-msg{
+  height: 300px;
+  width: 400px;
+  border-radius: 25px;
   font-size: 24px;
   margin: 100px auto;
+  color: green;
+  background-color: #000;
+  text-align: center;
+  padding: 50px;
 }
 
 .walk-left{
