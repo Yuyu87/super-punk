@@ -26,12 +26,14 @@ Game.prototype.start = function(){
 }
 
 Game.prototype._restart = function(){
+  this.gameTheme.play();
   this.intervalCounter = 0
   this.numBallsHit = 0
   this.player1.restart(this.board)
   if(this.exitsShot()) this.shot.restart()
   this.balls.forEach((ball)=>{ball.restart()})
   this._addFirstBall(this.board)
+  clearInterval(this.intervalCreateBallTime)
 
   this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalGameTime)
 }
@@ -47,9 +49,10 @@ Game.prototype.updateState = function(){
 
   this.balls.forEach((ball)=>{
     if(this.player1.ballHitPlayer(ball)){
+      this.gameTheme.pause()
       this.audioDie.play()
       clearInterval(this.gameIntervalId)
-      setTimeout(()=>{ this._restartOrFinish() }, 1000);
+      setTimeout(()=>{ this._restartOrFinish() }, 1500);
     }
     if(this.exitsShot())
       if(this.shot.hitBall(this.board, ball)){
@@ -99,16 +102,30 @@ Game.prototype.exitsShot = function () {
 }
 
 Game.prototype.lastIdOnBalls = function(){
-  return parseInt(this.balls[this.balls.length-1].identifier.slice(4)) + 1
+  if(this.balls.length === 0) return 0
+  else return parseInt(this.balls[this.balls.length-1].identifier.slice(4)) + 1
 }
 
 Game.prototype._addFirstBall = function(){
   this.balls = []
-  this.balls.push(new Ball(200, 100, 5, 80, 'ball' + this.balls.length, this.board))
+  this._addBall()
 }
 
 Game.prototype._addBall = function(){
-  this.balls.push(new Ball(200, 100, 5, 80, 'ball' + this.lastIdOnBalls()))
+  var ballWidth = this._randomBallWidth()
+  var ballX = this._randomBallX(ballWidth)
+  this.balls.push(new Ball(ballX, 100, 5, ballWidth, 'ball' + this.lastIdOnBalls(), this.board))
+}
+
+Game.prototype._randomBallWidth = function(){
+  var balldWidth = [80, 40]
+  var indexRandom = Math.floor(Math.random()*balldWidth.length)
+
+  return balldWidth[indexRandom]
+}
+
+Game.prototype._randomBallX = function(ballWidth){
+  return Math.round(Math.random()* (this.board.width - ballWidth)) + 1
 }
 
 Game.prototype.createShot = function(){
