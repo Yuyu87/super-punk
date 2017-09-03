@@ -13,19 +13,19 @@ function Game(){
   this.level = 1
   this._renderLevel()
   this.levelsToWin = 5
-  this.gameTheme = new Audio('./audio/super_punk.ogg');
-  this.audioExplosion = new Audio('./audio/explosion.wav');
-  this.audioDie = new Audio('./audio/die.ogg');
+  this.gameTheme = new Audio('./audio/super_punk.ogg')
+  this.audioExplosion = new Audio('./audio/explosion.wav')
+  this.audioDie = new Audio('./audio/die.ogg')
 }
 
 Game.prototype.start = function(){
-  this.gameTheme.play();
+  this.gameTheme.play()
   this.gameIntervalId = setInterval(this.updateState.bind(this), this.intervalGameTime)
   this.createBallIntervalId = setInterval(this._addBall.bind(this), this.intervalCreateBallTime)
 }
 
 Game.prototype._restart = function(){
-  this.gameTheme.play();
+  this.gameTheme.play()
   this.intervalCounter = 0
   this.numBallsHit = 0
   this.player1.restart(this.board)
@@ -51,7 +51,7 @@ Game.prototype.updateState = function(){
       this.gameTheme.pause()
       this.audioDie.play()
       clearInterval(this.gameIntervalId)
-      setTimeout(()=>{ this._restartOrFinish() }, 1500);
+      setTimeout(()=>{ this._restartOrFinish() }, 1500)
     }
     if(this.exitsShot())
       if(this.shot.hitBall(this.board, ball)){
@@ -136,7 +136,7 @@ Game.prototype.checkObject = function(){
   if($('#' + this.player1.identifier).collision('#hideObject').attr('id') == 'hideObject'){
     if($('#hideObject').hasClass('beer')){
       this.player1.speed2X()
-      setTimeout(()=>{ this.player1.divideSpeedBy2() }, 5000);
+      setTimeout(()=>{ this.player1.divideSpeedBy2() }, 5000)
     }
 
     if($('#hideObject').hasClass('clock')){

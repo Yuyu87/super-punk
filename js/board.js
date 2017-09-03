@@ -14,4 +14,4 @@ Board.prototype._render = function () {
     left: this.left
   })
   $('body').append($board)
-};
+}
