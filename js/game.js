@@ -1,6 +1,6 @@
 function Game(){
   this.board = new Board(400, 700, 100, 90)
-  this.player1 = new Player(this.board.width/2 - 20, this.board.height - 60, 40, 60, 5, 3, 'player1', this.board)
+  this.player1 = new Player(this.board.width/2 - 20, this.board.height - 60, 40, 60, 10, 3, 'player1', this.board)
   this.ballsSpeed = 5
   this._addFirstBall(this.board)
   this.shot
