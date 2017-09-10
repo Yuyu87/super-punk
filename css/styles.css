@@ -76,7 +76,7 @@ body{
   -webkit-animation-delay: 3s;
 }
 
-a{
+.play-btn{
   cursor: pointer;
   margin-top: 10px;
   width: 150px;
@@ -85,7 +85,21 @@ a{
 
 .author{
   text-align: right;
-  margin-top: 80px;
+  margin-top: 30px;
+}
+
+.btn-twitter, .btn-linkedin{
+  margin-left: 5px;
+  height: 40px;
+  width: 40px;
+  vertical-align: middle;
+}
+
+a, .follow{
+  margin-top: 30px;
+  text-align: right;
+  font-size: 0.9em;
+  display: inline-block;
 }
 
 #board{
@@ -94,7 +108,6 @@ a{
   background-size: cover;
   position: relative;
   border: 10px ridge green;
-
 }
 
 .player{

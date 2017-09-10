@@ -173,6 +173,8 @@ Game.prototype._gameOver = function(){
   $gameOver = $('<div>').attr('id', 'game-over').text('GAME OVER').addClass('final-msg')
   $gameOver.append($finalInfo)
   $('body').append($gameOver)
+
+  this._addFollowIcons('#game-over')
 }
 
 Game.prototype._youWin = function(){
@@ -184,6 +186,16 @@ Game.prototype._youWin = function(){
   $youWin = $('<div>').attr('id', 'you-win').text('YOU WIN').addClass('final-msg')
   $youWin.append($finalInfo)
   $('body').append($youWin)
+
+  this._addFollowIcons('#you-win')
+}
+
+Game.prototype._addFollowIcons = function(idName){
+  $(idName).append(
+    '<a href="https://twitter.com/y4izus" target="_blank">' +
+      '<img src="img/twitter.png" class="btn-twitter"></a>' +
+    '<a href="https://linkedin.com/in/yaizagarciamm" target="_blank">' +
+      '<img src="img/linkedin.png" class="btn-linkedin"></a>')
 }
 
 Game.prototype._createFinalMsgLevelPoints = function(){
