@@ -1,6 +1,6 @@
 body{
   font-family: 'Underdog', cursive;
-  font-size: 2em;
+  font-size: 1.5em;
   background: #000 !important;
   color: #fff !important;
   background-repeat: no-repeat;
@@ -8,7 +8,7 @@ body{
 }
 
 .row-pang{
-  margin: 20px;
+  margin: 10px;
 }
 
 .letter-pang{
@@ -31,7 +31,6 @@ body{
   background-repeat: no-repeat;
   background-size: contain;
   height: 200px;
-  margin-top: 20px;
   -moz-animation-delay: 2.5s;
   -webkit-animation-delay: 2.5s;
 }
